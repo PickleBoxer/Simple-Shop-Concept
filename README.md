@@ -56,3 +56,9 @@ $ symfony server:start -d
 ```
 $ symfony open:local
 ```
+
+**Stop the Web Server**
+
+```
+$ symfony server:stop
+```
