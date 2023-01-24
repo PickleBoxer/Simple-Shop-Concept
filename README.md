@@ -49,7 +49,7 @@ DATABASE_URL="mysql://root@127.0.0.1:3306/simple_shop?serverVersion=8&charset=ut
 $ php bin/console doctrine:database:create --if-not-exists
 ```
 
-**execute a migration in database **
+**execute a migration in database**
 
 ```
 $ symfony console doctrine:migrations:migrate
