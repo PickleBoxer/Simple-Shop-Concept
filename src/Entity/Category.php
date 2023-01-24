@@ -18,12 +18,20 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    #[ORM\Column]
+    private ?bool $active = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_category', targetEntity: Product::class)]
     private Collection $products;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->id;
     }
 
     public function getId(): ?int
@@ -43,6 +51,18 @@ class Category
         return $this;
     }
 
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Product>
      */
@@ -55,7 +75,7 @@ class Category
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setCategory($this);
+            $product->setIdCategory($this);
         }
 
         return $this;
@@ -65,8 +85,8 @@ class Category
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
+            if ($product->getIdCategory() === $this) {
+                $product->setIdCategory(null);
             }
         }
 

@@ -23,9 +23,20 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?bool $active = null;
+
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
+    private ?Category $id_category = null;
+
+    public function __toString(): string
+   {
+        return (string) $this->getName();
+    }
 
     public function getId(): ?int
     {
@@ -68,14 +79,38 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->category;
+        return $this->createdAt;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->category = $category;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getIdCategory(): ?Category
+    {
+        return $this->id_category;
+    }
+
+    public function setIdCategory(?Category $id_category): self
+    {
+        $this->id_category = $id_category;
 
         return $this;
     }

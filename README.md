@@ -27,6 +27,18 @@ $ cd Simple-Shop-Concept
 $ composer install
 ```
 
+**Creating the Database**
+
+```
+$ php bin/console doctrine:database:create --if-not-exists
+```
+
+**execute a migration in database **
+
+```
+$ symfony console doctrine:migrations:migrate
+```
+
 **Enabling TLS**
 
 ```
