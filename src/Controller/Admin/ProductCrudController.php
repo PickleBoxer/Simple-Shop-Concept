@@ -47,4 +47,23 @@ class ProductCrudController extends AbstractCrudController
         }
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Product')
+            ->setEntityLabelInPlural('Products')
+            ->setSearchFields(['name', 'id'])
+            ->setDefaultSort(['createdAt' => 'DESC'])
+        ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(EntityFilter::new('id_category'))
+            ->add('id')
+            ->add('active')
+        ;
+    }
+
 }
