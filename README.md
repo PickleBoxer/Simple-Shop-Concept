@@ -39,6 +39,12 @@ $ php bin/console doctrine:database:create --if-not-exists
 $ symfony console doctrine:migrations:migrate
 ```
 
+**Loading Data Fixtures**
+
+```
+$ symfony console doctrine:fixtures:load
+```
+
 **Enabling TLS**
 
 ```

@@ -2,14 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
 use App\Entity\Product;
-use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class ProductFixtures extends Fixture
-{    
+{
     /**
      * load
      *
@@ -30,8 +28,8 @@ class ProductFixtures extends Fixture
                 ->setPrice(mt_rand(10, 600))
                 ->setCreatedAt($today)
                 ->setActive(1)
-                ->setIdCategory('1')
-                ;
+                // this reference returns the Category object created in CategoryFixtures
+                ->setIdCategory($this->getReference(CategoryFixtures::DEFAULT_CAT_ID));;
 
             $manager->persist($product);
         }
