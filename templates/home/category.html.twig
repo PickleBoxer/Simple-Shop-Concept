@@ -6,6 +6,8 @@
     <h2>{{ category }}</h2>
 
     {% if products|length > 0 %}
+        <div>There are {{ products|length }} products.</div>
+
         {% for product in products %}
             {# {% if product.photofilename %}
                 <img src="{{ asset('uploads/photos/' ~ product.photofilename) }}" />
@@ -18,6 +20,13 @@
 
             <p>{{ product.description }}</p>
         {% endfor %}
+
+        {% if previous >= 0 %}
+            <a href="{{ path('category', { id: category.id, offset: previous }) }}">Previous</a>
+        {% endif %}
+        {% if next < products|length %}
+            <a href="{{ path('category', { id: category.id, offset: next }) }}">Next</a>
+        {% endif %}
     {% else %}
         <div>No product in this category yet</div>
     {% endif %}

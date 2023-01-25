@@ -41,12 +41,21 @@ class HomeController extends AbstractController
     }
 
     #[Route('/category/{id}', name: 'category')]
-    public function show(Category $category, ProductRepository $productRepository): Response
+    public function show(Request $request, Category $category, ProductRepository $productRepository): Response
     {
+        // To manage the pagination in the template
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $productRepository->getProductPaginator($category, $offset);
+
         // $category will equal the dynamic part of the URL
+        // The controller gets the offset from the Request query string ($request->query) as an integer (getInt()), defaulting to 0 if not available.
+        // The previous and next offsets are computed based on all the information we have from the paginator.
         return $this->render('home/category.html.twig', [
             'category' => $category,
-            'products' => $productRepository->findBy(['id_category' => $category], ['createdAt' => 'DESC']),
+            //'products' => $productRepository->findBy(['id_category' => $category], ['createdAt' => 'DESC']), //without pagination
+            'products' => $paginator,
+            'previous' => $offset - ProductRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + ProductRepository::PAGINATOR_PER_PAGE),
         ]);
     }
 }
