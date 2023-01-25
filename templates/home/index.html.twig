@@ -12,6 +12,13 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
     <h2> {{ greet }} </h2
 
+    {% for category in categories %}
+         <h4>{{ category }}</h4>
+        <p>
+            <a href="{{ path('category', { id: category.id }) }}">View</a>
+        </p>
+     {% endfor %}
+
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/Users/Uporabnik/Desktop/Simple-Shop-Concept/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>

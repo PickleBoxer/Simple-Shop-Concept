@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category - {{ category }}{% endblock %}
+
+{% block body %}
+    <h2>{{ category }}</h2>
+
+    {% if products|length > 0 %}
+        {% for product in products %}
+            {# {% if product.photofilename %}
+                <img src="{{ asset('uploads/photos/' ~ product.photofilename) }}" />
+            {% endif %} #}
+
+            <h4>{{ product.name }}</h4>
+            <small>
+                {{ product.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ product.description }}</p>
+        {% endfor %}
+    {% else %}
+        <div>No product in this category yet</div>
+    {% endif %}
+{% endblock %}
