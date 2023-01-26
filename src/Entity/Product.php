@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+// Enabling the lifecycle callbacks
+#[ORM\HasLifecycleCallbacks]
 class Product
 {
     #[ORM\Id]
@@ -101,6 +103,14 @@ class Product
         $this->active = $active;
 
         return $this;
+    }
+
+    // The ORM\PrePersist event is triggered when the object is stored in the database for the very first time
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        // Current date and time is used for the value of the createdAt property
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getIdCategory(): ?Category
