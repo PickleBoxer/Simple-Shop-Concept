@@ -23,12 +23,12 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 1; $i <= 10; $i++) {
             $product = new Product();
-            $today = new \DateTimeImmutable('now');
+            //$today = new \DateTimeImmutable('now');
             $product
                 ->setName('Product ' . $i)
                 ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua')
                 ->setPrice(mt_rand(10, 600))
-                ->setCreatedAt($today)
+                //->setCreatedAt($today)
                 ->setActive(1)
                 // this reference returns the Category object created in CategoryFixtures
                 ->setIdCategory($this->getReference(CategoryFixtures::DEFAULT_CAT_ID));;
