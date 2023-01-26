@@ -6,8 +6,12 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+// Validates that a particular field
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[UniqueEntity('slug')]
 class Category
 {
     #[ORM\Id]
@@ -24,6 +28,11 @@ class Category
     #[ORM\OneToMany(mappedBy: 'id_category', targetEntity: Product::class)]
     private Collection $products;
 
+    // #[ORM\Column(length: 255)]
+    // Validates that a particular field
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -32,6 +41,16 @@ class Category
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    // The computeSlug() method only computes a slug when the current slug is empty or set to the special ' - ' value
+    // ' - ' special value -> Because when adding a category in the backend, the slug is required
+    // tells the application that we want the slug to be automatically generated
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        if (!$this->slug || '-' === $this->slug) {
+            $this->slug = (string) $slugger->slug((string) $this)->lower();
+        }
     }
 
     public function getId(): ?int
@@ -89,6 +108,18 @@ class Category
                 $product->setIdCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

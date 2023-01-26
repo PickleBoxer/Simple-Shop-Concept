@@ -25,7 +25,7 @@
 			<ul>
 				{% for category in categories %}
 					<li>
-						<a href="{{ path('category', { id: category.id }) }}">{{ category }}</a>
+						<a href="{{ path('category', { slug: category.slug }) }}">{{ category }}</a>
 					</li>
 				{% endfor %}
 			</ul>

@@ -16,13 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-
-    /**
-     * index
-     *
-     * @param  mixed $request
-     * @return Response
-     */
     public function index(Request $request, CategoryRepository $categoryRepository): Response
     {
         $greet = '';
@@ -40,7 +33,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/category/{id}', name: 'category')]
+    #[Route('/category/{slug}', name: 'category')]
     public function show(Request $request, Category $category, ProductRepository $productRepository): Response
     {
         // To manage the pagination in the template

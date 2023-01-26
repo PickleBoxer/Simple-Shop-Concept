@@ -22,10 +22,10 @@
         {% endfor %}
 
         {% if previous >= 0 %}
-            <a href="{{ path('category', { id: category.id, offset: previous }) }}">Previous</a>
+            <a href="{{ path('category', { slug: category.slug, offset: previous }) }}">Previous</a>
         {% endif %}
         {% if next < products|length %}
-            <a href="{{ path('category', { id: category.id, offset: next }) }}">Next</a>
+            <a href="{{ path('category', { slug: category.slug, offset: next }) }}">Next</a>
         {% endif %}
     {% else %}
         <div>No product in this category yet</div>

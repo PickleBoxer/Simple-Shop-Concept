@@ -105,7 +105,7 @@ class Product
         return $this;
     }
 
-    // The ORM\PrePersist event is triggered when the object is stored in the database for the very first time
+    // The ORM\PrePersist event is triggered when the object is stored in the database for the very first time (Doctrine event listeners)
     #[ORM\PrePersist]
     public function setCreatedAtValue()
     {
