@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
+
+    // The route name will be useful when we want to reference the homepage in the code. Instead of hard-coding the / path, we will use the route name.
     #[Route('/', name: 'homepage')]
     public function index(Request $request, CategoryRepository $categoryRepository): Response
     {
