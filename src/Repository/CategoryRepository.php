@@ -21,6 +21,12 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    // Override the default implementation of the findAll() method to be sure that sorting applies everywhere:
+    public function findAll(): array
+    {
+        return $this->findBy([], ['name' => 'ASC']);
+    }
+
     public function save(Category $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
