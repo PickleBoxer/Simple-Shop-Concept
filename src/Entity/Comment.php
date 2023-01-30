@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+// Enabling the lifecycle callbacks
+#[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
@@ -81,6 +83,14 @@ class Comment
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    // The ORM\PrePersist event is triggered when the object is stored in the database for the very first time (Doctrine event listeners)
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        // Current date and time is used for the value of the createdAt property
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getProduct(): ?Product
