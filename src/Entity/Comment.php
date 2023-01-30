@@ -32,6 +32,9 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoFilename = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +104,18 @@ class Comment
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getPhotoFilename(): ?string
+    {
+        return $this->photoFilename;
+    }
+
+    public function setPhotoFilename(?string $photoFilename): self
+    {
+        $this->photoFilename = $photoFilename;
 
         return $this;
     }

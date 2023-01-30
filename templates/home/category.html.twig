@@ -9,11 +9,11 @@
         <div>There are {{ products|length }} products.</div>
 
         {% for product in products %}
-            {# {% if product.photofilename %}
-                <img src="{{ asset('uploads/photos/' ~ product.photofilename) }}" />
-            {% endif %} #}
+            {% if product.image %}
+                <img src="{{ asset('uploads/photos/' ~ product.image) }}" />
+            {% endif %}
 
-            <h4>{{ product.name }}</h4>
+            <h4><a href="{{ path('product', { id: product.id }) }}">{{ product.name }}</a></h4>
             <small>
                 {{ product.createdAt|format_datetime('medium', 'short') }}
             </small>

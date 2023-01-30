@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -34,6 +35,11 @@ class ProductCrudController extends AbstractCrudController
         ;
         yield BooleanField::new('active');
         yield NumberField::new('price');
+        yield ImageField::new('image')
+            ->setUploadDir('public/images/product')
+            ->setBasePath('public/images/product')
+            ->setLabel('Photo')
+        ;
 
         $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
             'html5' => true,
