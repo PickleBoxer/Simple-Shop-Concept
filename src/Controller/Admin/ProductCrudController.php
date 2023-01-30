@@ -36,8 +36,8 @@ class ProductCrudController extends AbstractCrudController
         yield BooleanField::new('active');
         yield NumberField::new('price');
         yield ImageField::new('image')
+            ->setBasePath('/images/product')
             ->setUploadDir('public/images/product')
-            ->setBasePath('public/images/product')
             ->setLabel('Photo')
         ;
 

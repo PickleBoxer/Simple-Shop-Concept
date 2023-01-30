@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Comment;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -52,5 +53,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'homepage');
         yield MenuItem::linkToCrud('Category', 'fas fa-map-marker-alt', Category::class);
         yield MenuItem::linkToCrud('Product', 'fas fa-comments', Product::class);
+        yield MenuItem::linkToCrud('Comment', 'fas fa-comments', Comment::class);
     }
 }
