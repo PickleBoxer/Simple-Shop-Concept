@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * HomeController
@@ -64,8 +66,12 @@ class HomeController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'product')]
-    public function showProduct(Request $request, Product $product, CommentRepository $commentRepository): Response
-    {
+    public function showProduct(
+        Request $request,
+        Product $product,
+        CommentRepository $commentRepository,
+        #[Autowire('%comments_photo_dir%')] string $photoDir,
+    ): Response {
         // Displaying a Form for comments
         // create the form in the controller and pass it to the template
         $comment = new Comment();
@@ -76,6 +82,20 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //The product is forced to be the same as the one from the URL (removed it from the form).
             $comment->setProduct($product);
+
+            // Manage photo uploads
+            if ($photo = $form['photo']->getData()) {
+                // Random name for the file
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    // Move the uploaded file to its final location
+                    $photo->move($photoDir, $filename);
+                } catch (FileException $e) {
+                    // unable to upload the photo, give up
+                }
+                // Store the filename in the Comment object
+                $comment->setPhotoFilename($filename);
+            }
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
