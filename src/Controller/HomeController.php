@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Form\CommentFormType;
@@ -19,6 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
+    }
 
     // The route name will be useful when we want to reference the homepage in the code. Instead of hard-coding the / path, we will use the route name.
     #[Route('/', name: 'homepage')]
@@ -65,6 +70,19 @@ class HomeController extends AbstractController
         // create the form in the controller and pass it to the template
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
+
+        //handle the form submission and the persistence of its information to the database
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //The product is forced to be the same as the one from the URL (removed it from the form).
+            $comment->setProduct($product);
+
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+
+            // If the form is not valid, display the page, but the form will now contain submitted values and error messages so that they can be displayed back to the user.
+            return $this->redirectToRoute('product', ['id' => $product->getId()]);
+        }
 
         // To manage the pagination in the template
         $offset = max(0, $request->query->getInt('offset', 0));
