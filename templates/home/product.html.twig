@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product - {{ product }}{% endblock %}
+
+{% block body %}
+    <h2>{{ product }}</h2>
+
+    {% if comments|length > 0 %}
+        <div>There are {{ comments|length }} comments.</div>
+
+        {% for comment in comments %}
+
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ comment.text }}</p>
+        {% endfor %}
+
+        {% if previous >= 0 %}
+            <a href="{{ path('product', { id: product.id, offset: previous }) }}">Previous</a>
+        {% endif %}
+        {% if next < comments|length %}
+            <a href="{{ path('product', { id: product.id, offset: next }) }}">Next</a>
+        {% endif %}
+    {% else %}
+        <div>No comments for this product yet</div>
+    {% endif %}
+{% endblock %}

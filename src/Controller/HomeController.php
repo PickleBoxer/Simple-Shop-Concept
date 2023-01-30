@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +53,25 @@ class HomeController extends AbstractController
             'products' => $paginator,
             'previous' => $offset - ProductRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + ProductRepository::PAGINATOR_PER_PAGE),
+        ]);
+    }
+
+    #[Route('/product/{id}', name: 'product')]
+    public function showProduct(Request $request, Product $product, CommentRepository $commentRepository): Response
+    {
+        // To manage the pagination in the template
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $commentRepository->getCommentPaginator($product, $offset);
+
+        // $product will equal the dynamic part of the URL
+        // The controller gets the offset from the Request query string ($request->query) as an integer (getInt()), defaulting to 0 if not available.
+        // The previous and next offsets are computed based on all the information we have from the paginator.
+        return $this->render('home/product.html.twig', [
+            'product' => $product,
+            //'comments' => $commentRepository->findBy(['product' => $product], ['createdAt' => 'DESC']), //without pagination
+            'comments' => $paginator,
+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
         ]);
     }
 }
