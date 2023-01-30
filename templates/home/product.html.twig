@@ -27,4 +27,9 @@
     {% else %}
         <div>No comments for this product yet</div>
     {% endif %}
+
+    <h2>Add your own feedback</h2>
+
+    {# Displaying the form in the template can be done via the form Twig function #}
+    {{ form(comment_form) }}
 {% endblock %}

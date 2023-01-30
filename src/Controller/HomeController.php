@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
+use App\Form\CommentFormType;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -59,6 +61,11 @@ class HomeController extends AbstractController
     #[Route('/product/{id}', name: 'product')]
     public function showProduct(Request $request, Product $product, CommentRepository $commentRepository): Response
     {
+        // Displaying a Form for comments
+        // create the form in the controller and pass it to the template
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class, $comment);
+
         // To manage the pagination in the template
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($product, $offset);
@@ -72,6 +79,7 @@ class HomeController extends AbstractController
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+            'comment_form' => $form,
         ]);
     }
 }
