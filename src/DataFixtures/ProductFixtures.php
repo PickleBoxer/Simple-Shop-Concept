@@ -21,7 +21,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         // $product = new Product();
         // $manager->persist($product);
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             $product = new Product();
             //$today = new \DateTimeImmutable('now');
             $product

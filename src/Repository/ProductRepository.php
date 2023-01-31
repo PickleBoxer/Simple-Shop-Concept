@@ -18,7 +18,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public const PAGINATOR_PER_PAGE = 2;
+    public const PAGINATOR_PER_PAGE = 6;
 
     public function __construct(ManagerRegistry $registry)
     {
