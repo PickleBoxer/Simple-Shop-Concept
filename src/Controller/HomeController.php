@@ -77,6 +77,8 @@ class HomeController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
 
+        dump($product);
+
         //handle the form submission and the persistence of its information to the database
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
