@@ -25,6 +25,11 @@ $ cd Simple-Shop-Concept
 
 ```
 $ composer install
+
+$ npm install
+
+// compiling the assets
+$ symfony run -d npm run watch
 ```
 
 **Changing the Default DATABASE_URL Value in .env**
