@@ -29,6 +29,9 @@
 		</div>
 	</div>
 
+	<div class="container">
+		<div class="row mt-3 mb-4">
+
 	{% if comments|length > 0 %}
 		<div>There are
 			{{ comments|length }}
@@ -61,4 +64,8 @@
 	<h2>Add your own feedback</h2>
 
 	{# Displaying the form in the template can be done via the form Twig function #}
-	{{ form(comment_form) }}{% endblock %}
+	{{ form(comment_form) }}
+	
+	</div>
+	</div>
+	{% endblock %}
