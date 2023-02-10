@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityAdminController extends AbstractController
+class SecurityUserController extends AbstractController
 {
-    #[Route(path: 'admin/login', name: 'app_login')]
+    #[Route(path: '/login', name: 'user_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
@@ -21,20 +21,10 @@ class SecurityAdminController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        // OLD
-        //return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-
-        // @EasyAdmin login
-        return $this->render('@EasyAdmin/page/login.html.twig', [
-            // parameters usually defined in Symfony login forms
-            'error' => $error,
-            'last_username' => $lastUsername,
-            'csrf_token_intention' => 'authenticate',
-        ]);
-
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: 'admin/logout', name: 'app_logout')]
+    #[Route(path: '/logout', name: 'user_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

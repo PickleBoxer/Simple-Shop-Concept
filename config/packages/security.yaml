@@ -5,7 +5,7 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        app_admin_provider:
             entity:
                 # the class of the entity that represents users
                 class: App\Entity\Admin
@@ -15,16 +15,48 @@ security:
                 # optional: if you're using multiple Doctrine entity
                 # managers, this option defines which one to use
                 #manager_name: 'customer'
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                # the class of the entity that represents users
+                class: App\Entity\User
+
+                # the property to query by - e.g. email, username, etc
+                property: email
+
+                # optional: if you're using multiple Doctrine entity
+                # managers, this option defines which one to use
+                #manager_name: 'customer'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+        admin:
+            pattern: ^/admin
             lazy: true
-            provider: app_user_provider
+            provider: app_admin_provider
             custom_authenticator: App\Security\AppAdminAuthenticator
             logout:
                 path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+        main:
+            pattern: ^/
+            lazy: true
+            provider: app_user_provider
+            # Set as entry point the default authenticator of the application to fix the issue with multiple authenticators
+            entry_point: App\Security\AppUserAuthenticator
+            custom_authenticator:
+                - App\Security\AppAdminAuthenticator
+                - App\Security\AppUserAuthenticator
+            logout:
+                path: user_logout
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -37,8 +69,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # allow unauthenticated users to access the login form
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
         # restrict the /admin section to users having this role
-         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
