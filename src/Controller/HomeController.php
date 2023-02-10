@@ -36,8 +36,8 @@ class HomeController extends AbstractController
             $greet = sprintf('Hello %s!', $name);
         }
 
-        dump($request); //Debugging Variables
-        dump($categoryRepository->findAll()); //Debugging Variables
+        //dump($request); //Debugging Variables
+        //dump($categoryRepository->findAll()); //Debugging Variables
 
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
@@ -52,6 +52,8 @@ class HomeController extends AbstractController
         // To manage the pagination in the template
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $productRepository->getProductPaginator($category, $offset);
+
+        dump($paginator);
 
         // $category will equal the dynamic part of the URL
         // The controller gets the offset from the Request query string ($request->query) as an integer (getInt()), defaulting to 0 if not available.

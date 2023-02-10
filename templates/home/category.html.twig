@@ -39,6 +39,26 @@
 				{% if next < products|length %}
 					<a href="{{ path('category', { slug: category.slug, offset: next }) }}">Next</a>
 				{% endif %}
+
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-end">
+						<li class="page-item {% if previous >= 0 %}disabled{% endif %}">
+							<a class="page-link" href="{{ path('category', { slug: category.slug, offset: previous }) }}" tabindex="-1" {% if previous >= 0 %}aria-disabled="true"{% endif %}>Previous</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item" {% if next < products|length %}disabled{% endif %}>
+							<a class="page-link" href="{{ path('category', { slug: category.slug, offset: next }) }}">Next</a>
+						</li>
+					</ul>
+				</nav>
 			{% else %}
 				<div>No product in this category yet</div>
 			{% endif %}

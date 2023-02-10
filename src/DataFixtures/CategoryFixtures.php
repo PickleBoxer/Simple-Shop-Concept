@@ -15,7 +15,7 @@ class CategoryFixtures extends Fixture
     {
         $category = new Category();
         $category
-            ->setName('Default')
+            ->setName('Books')
             ->setActive(1);
 
         $manager->persist($category);
