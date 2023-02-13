@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Twig\Node\ForLoopNode;
 
 /**
  * HomeController
@@ -36,7 +37,6 @@ class HomeController extends AbstractController
             $greet = sprintf('Hello %s!', $name);
         }
 
-        //dump($request); //Debugging Variables
         //dump($categoryRepository->findAll()); //Debugging Variables
 
         return $this->render('home/index.html.twig', [
@@ -53,7 +53,20 @@ class HomeController extends AbstractController
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $productRepository->getProductPaginator($category, $offset);
 
-        dump($paginator);
+        // set page size
+        $pageSize = ProductRepository::PAGINATOR_PER_PAGE;
+        // total items
+        $totalItems = count($paginator);
+        // no. pages
+        $pagesCount = ceil($totalItems / $pageSize);
+        
+        $pages_links = [];
+        for ($i = 0; $i <= $pagesCount -1; $i++) {
+            $pages_links[$i+1] = min($totalItems, $i * $pageSize);
+        }
+
+        dump($pages_links);
+
 
         // $category will equal the dynamic part of the URL
         // The controller gets the offset from the Request query string ($request->query) as an integer (getInt()), defaulting to 0 if not available.
@@ -62,6 +75,9 @@ class HomeController extends AbstractController
             'category' => $category,
             //'products' => $productRepository->findBy(['id_category' => $category], ['createdAt' => 'DESC']), //without pagination
             'products' => $paginator,
+            'param' => $offset,
+            'pageSize' => $pageSize,
+            'pagination' => $pages_links,
             'previous' => $offset - ProductRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + ProductRepository::PAGINATOR_PER_PAGE),
         ]);
