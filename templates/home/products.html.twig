@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category -
-	{{ category }}
+{% block title %}All Products
+	{# {{ category }} #}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
-		<h1 class="mt-3 mb-4">{{ category }}</h1>
+		<h1 class="mt-3 mb-4">All Products</h1>
 		<div class="row">
 			{% if products|length > 0 %}
 				<div>There are
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 				{% endfor %}
-				{% if pageSize < products|length %}
+				{# {% if pageSize < products|length %}
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-end">
 							<li class="page-item {% if previous < 0 %}disabled{% endif %}">
@@ -48,9 +48,9 @@
 							</li>
 						</ul>
 					</nav>
-				{% endif %}
+				{% endif %} #}
 			{% else %}
-				<div>No product in this category yet</div>
+				<div>No product</div>
 			{% endif %}
 		</div>
 	</div>

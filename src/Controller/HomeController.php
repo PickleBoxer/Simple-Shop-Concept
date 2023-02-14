@@ -46,6 +46,16 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/products', name: 'products')]
+    public function products(ProductRepository $productRepository): Response
+    {
+        //dump($categoryRepository->findAll()); //Debugging Variables
+
+        return $this->render('home/products.html.twig', [
+            'products' => $productRepository->findAll()
+        ]);
+    }
+
     #[Route('/category/{slug}', name: 'category')]
     public function show(Request $request, Category $category, ProductRepository $productRepository): Response
     {
