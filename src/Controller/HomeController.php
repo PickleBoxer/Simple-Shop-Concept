@@ -7,6 +7,8 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Form\CommentFormType;
 use App\Entity\Product;
+use App\Form\AddToCartType;
+use App\Manager\CartManager;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
@@ -16,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Twig\Node\ForLoopNode;
 
 /**
  * HomeController
@@ -98,6 +99,7 @@ class HomeController extends AbstractController
         Request $request,
         Product $product,
         CommentRepository $commentRepository,
+        CartManager $cartManager,
         #[Autowire('%comments_photo_dir%')] string $photoDir,
     ): Response {
         // Displaying a Form for comments
@@ -107,7 +109,7 @@ class HomeController extends AbstractController
 
         dump($product);
 
-        //handle the form submission and the persistence of its information to the database
+        // Handle the Comment form submission and the persistence of its information to the database
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             //The product is forced to be the same as the one from the URL (removed it from the form).
@@ -134,6 +136,31 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('product', ['id' => $product->getId()]);
         }
 
+        // Displaying a Form for AddToCart
+        $formAdd = $this->createForm(AddToCartType::class);
+
+        // Handle the AddToCart form submission and add the product to the cart by using the CartManager manager.
+        $formAdd->handleRequest($request);
+
+        if ($formAdd->isSubmitted() && $formAdd->isValid()) {
+            // OrderItem object is updated according to the submitted data
+            $item = $formAdd->getData();
+            // Link the product to the OrderItem object
+            $item->setProduct($product);
+
+            // add the item to the current cart
+            $cart = $cartManager->getCurrentCart();
+            $cart
+                ->addItem($item)
+                ->setUpdatedAt(new \DateTime());
+
+            // Add the item to the current cart and persist it in the session and database
+            $cartManager->save($cart);
+
+            // Redirect the user to the product page
+            return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
+        }
+
         // To manage the pagination in the template
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($product, $offset);
@@ -148,6 +175,7 @@ class HomeController extends AbstractController
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
             'comment_form' => $form,
+            'formAdd' => $formAdd->createView(),
         ]);
     }
 }

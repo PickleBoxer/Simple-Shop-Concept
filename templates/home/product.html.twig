@@ -18,13 +18,21 @@
 				<b>Description:
 				</b>
 				{{ product.description }}
-				<form class="mt-4 p-4 bg-light" method="post">
+				{{ form_start(formAdd, {'attr': {'class': 'mt-4 p-4 bg-light'}}) }}
 					<div class="form-group">
-						<label for="quantity">Quantity</label>
-						<input type="number" class="form-control" id="quantity">
+						{{ form_label(formAdd.quantity) }}
+						{{ form_widget(formAdd.quantity, {
+							'attr': {
+								'class': 'form-control ' ~ (formAdd.quantity.vars.valid ? '' : 'is-invalid')
+							}
+						}) }}
+						<div class="invalid-feedback">
+							{{ form_errors(formAdd.quantity) }}
+						</div>
 					</div>
-					<button class="btn btn-warning">Add to Cart</button>
-				</form>
+					{{ form_widget(formAdd.add, {'attr': {'class': 'btn btn-warning w-25'}}) }}
+				{{ form_end(formAdd) }}
+
 			</div>
 		</div>
 	</div>
