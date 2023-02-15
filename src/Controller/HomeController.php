@@ -158,7 +158,7 @@ class HomeController extends AbstractController
             $cartManager->save($cart);
 
             // Redirect the user to the product page
-            return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
+            return $this->redirectToRoute('product', ['id' => $product->getId()]);
         }
 
         // To manage the pagination in the template
