@@ -46,8 +46,14 @@
 
 						</ul>
 
+						<div class="d-flex">
+							<a href="{{ path('cart') }}" class="btn btn-outline-dark me-2">
+								<i class="bi-cart-fill me-1"></i>
+								Cart
+								<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+							</a>
 						{% if is_granted('ROLE_USER') %}
-							<div class="dropdown text-end">
+							<div class="dropdown text-end d-flex align-items-center">
 								<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
 									<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
 								</a>
@@ -70,6 +76,7 @@
 								<a href="{{ path('user_register') }}" type="button" class="btn btn-warning">Sign-up</a>
 							</div>
 						{% endif %}
+						</div>
 					</div>
 				</nav>
 			</header>
