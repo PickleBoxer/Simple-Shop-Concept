@@ -26,7 +26,7 @@ class CommentCrudController extends AbstractCrudController
         yield EmailField::new('email');
         yield ImageField::new('photoFilename')
             ->setBasePath('/uploads/comments/photos')
-            ->setUploadDir('/public/uploads/comments/photos')
+            ->setUploadDir('public/uploads/comments/photos')
             ->setLabel('Photo')
         ;
     }

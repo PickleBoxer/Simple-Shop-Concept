@@ -48,12 +48,18 @@ class HomeController extends AbstractController
     }
 
     #[Route('/products', name: 'products')]
-    public function products(ProductRepository $productRepository): Response
+    public function products(Request $request, ProductRepository $productRepository): Response
     {
-        //dump($categoryRepository->findAll()); //Debugging Variables
+        $cat = '';
+
+        if ($id = $request->query->get('cat')) {
+            $products = $productRepository->findBy(['id_category' => $id], ['createdAt' => 'DESC']);
+        } else {
+            $products = $productRepository->findAll();
+        }
 
         return $this->render('home/products.html.twig', [
-            'products' => $productRepository->findAll()
+            'products' => $products
         ]);
     }
 

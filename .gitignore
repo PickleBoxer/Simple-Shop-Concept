@@ -23,7 +23,7 @@
 /.vscode/
 
 ### Excluding Uploaded Photos ## 
-/public/uploads
+### /public/uploads
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

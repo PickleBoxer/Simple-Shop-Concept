@@ -1,5 +1,9 @@
-// Require Bootstrap in the CSS file
-@import '~bootstrap/scss/bootstrap';
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
 .form-center {
     max-width: 330px;
     padding: 15px;
