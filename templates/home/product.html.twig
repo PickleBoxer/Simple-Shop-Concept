@@ -76,4 +76,12 @@
 	
 	</div>
 	</div>
+
+	{# read and display just one flash message type #}
+	{% for message in app.flashes('notice') %}
+		{{ include('partial/_toast.html.twig', {
+			title: 'Success!',
+			message: message
+		}) }}
+		{% endfor %}
 	{% endblock %}

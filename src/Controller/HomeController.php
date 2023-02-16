@@ -157,6 +157,13 @@ class HomeController extends AbstractController
             // Add the item to the current cart and persist it in the session and database
             $cartManager->save($cart);
 
+            // Flash Notice
+            $this->addFlash(
+                'notice',
+                'Product added to cart'
+            );
+            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+
             // Redirect the user to the product page
             return $this->redirectToRoute('product', ['id' => $product->getId()]);
         }
