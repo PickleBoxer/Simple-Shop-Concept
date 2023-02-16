@@ -11,8 +11,8 @@
                 <div class="col-md-8">
                     {{ form_start(form) }}
                     <div class="card">
-                        <div class="card-header bg-dark text-white d-flex">
-                            <h5>Items</h5>
+                        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                            <h5 class="m-0">Items</h5>
                             <div class="ml-auto">
                                 {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
                                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}

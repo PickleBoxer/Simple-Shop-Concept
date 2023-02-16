@@ -52,7 +52,7 @@
 								Cart
 								<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
 							</a>
-						{% if is_granted('ROLE_USER') %}
+						{% if app.user %}
 							<div class="dropdown text-end d-flex align-items-center">
 								<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
 									<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -71,7 +71,7 @@
 								</ul>
 							</div>
 						{% else %}
-							<div class="col-md-3 text-end">
+							<div class="text-end d-flex">
 								<a href="{{ path('user_login') }}" type="button" class="btn btn-outline-primary me-2">Login</a>
 								<a href="{{ path('user_register') }}" type="button" class="btn btn-warning">Sign-up</a>
 							</div>
