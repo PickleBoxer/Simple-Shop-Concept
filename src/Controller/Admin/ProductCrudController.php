@@ -39,6 +39,7 @@ class ProductCrudController extends AbstractCrudController
             ->setBasePath('/images/product')
             ->setUploadDir('public/images/product')
             ->setLabel('Photo')
+            ->setRequired(false)
         ;
 
         $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([

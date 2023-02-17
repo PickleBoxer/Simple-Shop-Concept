@@ -60,8 +60,14 @@ class HomeController extends AbstractController
             $products = $productRepository->findAll();
         }
 
-        //$products = new Product();
         $form = $this->createForm(SearchProductsType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $value = $form->getData();
+            echo ('hey' . $value);
+        }
 
         return $this->render('home/products.html.twig', [
             'products' => $products,

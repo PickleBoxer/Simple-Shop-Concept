@@ -16,8 +16,8 @@ class ProductAutocompleteField extends AbstractType
     {
         $resolver->setDefaults([
             'class' => Product::class,
-            'placeholder' => 'Choose a Product',
-            //'choice_label' => 'name',
+            'placeholder' => 'Find Product',
+            //'choice_label' => 'Search',
 
             'query_builder' => function(ProductRepository $productRepository) {
                 return $productRepository->createQueryBuilder('product');
