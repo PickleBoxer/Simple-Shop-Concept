@@ -17,19 +17,22 @@
 	</head>
 	<body class="d-flex flex-column h-100">
 		{% block header %}
-			<header class="p-3 mb-3">
+			<header class="p-3">
 				<nav class="container">
-					<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+					<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
 						<a href="{{ path('homepage') }}" class="navbar-brand me-4">
 							<span class="fs-4">📚 Simple store</span>
 						</a>
 
 						<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 							<li>
+								<a href="{{ path('homepage') }}" class="nav-link px-2 link-dark">📚 Home</a>
+							</li>
+							<li>
 								<a href="{{ path('admin') }}" class="nav-link px-2 link-dark">Back Office</a>
 							</li>
 							<li>
-								<a href="{{ path('products') }}" class="nav-link px-2 link-dark">All Products</a>
+								<a href="{{ path('products') }}" class="nav-link px-2 link-dark">All Books</a>
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

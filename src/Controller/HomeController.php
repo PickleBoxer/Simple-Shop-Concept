@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Category;
 use App\Entity\Comment;
-use App\Form\CommentFormType;
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\AddToCartType;
 use App\Manager\CartManager;
+use App\Form\CommentFormType;
+use App\Form\SearchProductsType;
+use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CommentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
@@ -31,7 +32,7 @@ class HomeController extends AbstractController
 
     // The route name will be useful when we want to reference the homepage in the code. Instead of hard-coding the / path, we will use the route name.
     #[Route('/', name: 'homepage')]
-    public function index(Request $request, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
     {
         $greet = '';
         if ($name = $request->query->get('hello')) {
@@ -44,6 +45,7 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'controller_name' => 'HomeController',
             'greet' => $greet,
+            'productsNew' => $productRepository->findBy(['active' => true], ['createdAt' => 'DESC'], 8),
         ]);
     }
 
@@ -58,8 +60,12 @@ class HomeController extends AbstractController
             $products = $productRepository->findAll();
         }
 
+        //$products = new Product();
+        $form = $this->createForm(SearchProductsType::class);
+
         return $this->render('home/products.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'search' => $form,
         ]);
     }
 

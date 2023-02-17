@@ -3,27 +3,65 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: fit-content; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h2> {{ greet }} </h2>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h2> {{ greet }} </h2
+    <section class="section-intro padding-top-sm">
+        <div class="container">
+        <div class="card p-3">
+            <div class="row">
+                <aside class="col-lg-3"> 
+                    <nav class="list-group">
+                    <a class="active bg-dark border-white list-group-item list-group-item-action">Categories ☟</a>
+                    {% for category in categories %}
+                        <a class="border-white list-group-item list-group-item-action" href="{{ path('category', { slug: category.slug }) }}">{{ category }}</a>
+                    {% endfor %}
+                    </nav>
+                </aside>
+                <div class="col-lg-9">
+                    <article class="card-banner p-5 bg-dark" style="height: 360px">
+                        <div style="max-width: 500px">
+                        <h2 class="text-white">Great products with <br> best deals </h2>
+                        <p class="text-white">No matter how far along you are in your sophistication as an amateur astronomer, there is always one.</p>
+                        <a href="{{ path('products') }}" class="btn btn-warning"> View more </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        </div> <!-- container end.// -->
+    </section>
 
-    {% for category in categories %}
-         <h4>{{ category }}</h4>
-        <p>
-            <a href="{{ path('category', { slug: category.slug }) }}">View</a>
-        </p>
-     {% endfor %}
+    <section class="mt-4">
+    <div class="container">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Uporabnik/Desktop/Simple-Shop-Concept/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Uporabnik/Desktop/Simple-Shop-Concept/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-    
-</div>
+        <header class="section-heading">
+            <h3 class="section-title">New Books</h3>
+        </header> 
+        
+        <div class="row">
+        {% for product in productsNew %}
+            <div class="col-md-4 col-lg-3">
+				<div class="card mb-4">
+					{% if product.image %}
+						<img src="{{ asset('/images/product/' ~ product.image) }}" alt="{{ product.name }}" class="card-img-top">
+					{% endif %}
+					<div class="card-body">
+						<h5 class="card-title">
+							<a href="{{ path('product', { id: product.id }) }}">{{ product.name }}</a>
+						</h5>
+						<p class="card-text">{{ product.description|length > 50 ? product.description|slice(0, 50) ~ '...' : product.description  }}</p>
+						<div class="d-flex justify-content-between align-item-center">
+							<a href="{{ path('product', { id: product.id }) }}" class="btn btn-dark">View details</a>
+							<span class="h5 mt-auto">{{ product.price }}
+								€</span>
+						</div>
+					</div>
+				</div>
+			</div>
+        {% endfor %}
+        </div> <!-- row end.// -->
+
+    </div> <!-- container end.// -->
+    </section>
+
 {% endblock %}

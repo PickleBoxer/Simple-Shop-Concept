@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <h1>Your Cart</h1>
         {% if cart.items.count > 0 %}
-            <div class="row mt-4">
+            <div class="row my-4">
                 <!-- List of items -->
                 <div class="col-md-8">
                     {{ form_start(form) }}
@@ -20,11 +20,11 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             {% for item in form.items %}
-                                <li class="list-group-item d-flex">
-                                    <div class="flex-fill p-3">
-                                        <img src="https://via.placeholder.com/200x150" class="img-fluid" alt="Product image">
+                                <li class="list-group-item d-flex flex-wrap align-items-center justify-content-center">
+                                    <div class="flex p-3">
+                                        <img src="/images/product/{{ item.vars.data.product.image }}" class="img-fluid" alt="Product image">
                                     </div>
-                                    <div class="flex-fill mr-2">
+                                    <div class="flex-fill p-4">
                                         <h5 class="mt-0 mb-0">{{ item.vars.data.product.name }}</h5>
                                         <small>{{ item.vars.data.product.description[:50] }}...</small>
                                         <div class="form-inline mt-2">
@@ -38,10 +38,10 @@
                                                     {{ form_errors(item.quantity) }}
                                                 </div>
                                             </div>
-                                            {{ form_widget(item.remove, {'attr': {'class': 'btn btn-dark btn-sm'}}) }}
+                                            {{ form_widget(item.remove, {'attr': {'class': 'btn btn-dark btn-sm mt-3'}}) }}
                                         </div>
                                     </div>
-                                    <div class="flex-fill mr-2 text-right">
+                                    <div class="flex-fill py-4 text-right">
                                         <b>{{ item.vars.data.product.price }} €</b>
                                     </div>
                                 </li>
