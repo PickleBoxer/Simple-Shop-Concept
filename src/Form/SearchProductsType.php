@@ -13,8 +13,7 @@ class SearchProductsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('product', ProductAutocompleteField::class)
-        ->add('submit', SubmitType::class)
+        ->add('name', ProductAutocompleteField::class, ['label' => 'Search Books:'])
         ;
     }
 

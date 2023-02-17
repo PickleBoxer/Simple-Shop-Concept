@@ -66,7 +66,8 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $value = $form->getData();
-            echo ('hey' . $value);
+            $products = $productRepository->findBy(['name' => strval($value)]);
+
         }
 
         return $this->render('home/products.html.twig', [
