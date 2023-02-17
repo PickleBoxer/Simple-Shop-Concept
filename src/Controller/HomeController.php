@@ -67,7 +67,6 @@ class HomeController extends AbstractController
         {
             $value = $form->getData();
             $products = $productRepository->findBy(['name' => strval($value)]);
-
         }
 
         return $this->render('home/products.html.twig', [
