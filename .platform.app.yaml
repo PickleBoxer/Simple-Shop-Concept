@@ -57,3 +57,4 @@ hooks:
         set -x -e
 
         symfony-deploy
+        
