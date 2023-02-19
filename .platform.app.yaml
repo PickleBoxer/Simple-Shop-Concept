@@ -9,6 +9,9 @@ runtime:
         - sodium
         - ctype
         - iconv
+        - pcntl
+        - posix
+
         
 
 #variables:
