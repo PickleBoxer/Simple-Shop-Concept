@@ -58,3 +58,5 @@ hooks:
 
         symfony-deploy
         
+relationships:
+    database: "database:mysql"
