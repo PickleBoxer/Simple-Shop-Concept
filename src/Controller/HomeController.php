@@ -94,9 +94,6 @@ class HomeController extends AbstractController
             $pages_links[$i+1] = min($totalItems, $i * $pageSize);
         }
 
-        dump($pages_links);
-
-
         // $category will equal the dynamic part of the URL
         // The controller gets the offset from the Request query string ($request->query) as an integer (getInt()), defaulting to 0 if not available.
         // The previous and next offsets are computed based on all the information we have from the paginator.
@@ -124,8 +121,6 @@ class HomeController extends AbstractController
         // create the form in the controller and pass it to the template
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
-
-        dump($product);
 
         // Handle the Comment form submission and the persistence of its information to the database
         $form->handleRequest($request);
